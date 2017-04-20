@@ -3,7 +3,7 @@ import os
 from apiclient.errors import HttpError
 from werkzeug import secure_filename
 from oauth2client.tools import argparser
-from upload import initialize_upload, get_authenticated_service, allowed_file
+from upload import initialize_upload, get_authenticated_service
 
 
 # Initialize the Flask application
@@ -53,5 +53,12 @@ def upload():
         youtube = get_authenticated_service(args)
         try:
             initialize_upload(youtube, args)
+            print "Video Uploaded Successfully"
+            return render_template('index.html')
         except HttpError, e:
             print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']

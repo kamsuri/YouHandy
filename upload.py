@@ -1,6 +1,5 @@
 import httplib
 import httplib2
-import os
 import random
 import sys
 import time
@@ -10,7 +9,6 @@ from apiclient.http import MediaFileUpload
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import run_flow
-import app
 
 # Explicitly tell the underlying HTTP transport library not to retry, since
 # we are handling retry logic ourselves.
@@ -41,8 +39,7 @@ YOUTUBE_API_VERSION = "v3"
 MISSING_CLIENT_SECRETS_MESSAGE = """
 WARNING: Please configure OAuth 2.0
 To make this sample run you will need to populate the client_secrets.json file
-""" % os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                   CLIENT_SECRETS_FILE))
+"""
 
 
 def get_authenticated_service(args):
@@ -64,28 +61,28 @@ def initialize_upload(youtube, options):
     if options.keywords:
         tags = options.keywords.split(",")
 
-        body = dict(
-                    snippet=dict(
-                                 title=options.title,
-                                 description=options.description,
-                                 tags=tags,
-                                 categoryId=options.category
-                                 ),
-                    status=dict(
-                                privacyStatus=options.privacyStatus
-                                )
-                    )
+    body = dict(
+        snippet=dict(
+            title=options.title,
+            description=options.description,
+            ags=tags,
+            categoryId=options.category
+            ),
+        status=dict(
+            privacyStatus=options.privacyStatus
+            )
+        )
 
-        # Call the API's videos.insert method to create and upload the video.
-        insert_request = youtube.videos().insert(
-                                                 part=",".join(body.keys()),
-                                                 body=body,
-                                                 media_body=MediaFileUpload(
-                                                    options.file, chunksize=-1,
-                                                    resumable=True
-                                                    )
-                                                 )
-        resumable_upload(insert_request)
+    # Call the API's videos.insert method to create and upload the video.
+    insert_request = youtube.videos().insert(
+        part=",".join(body.keys()),
+        body=body,
+        media_body=MediaFileUpload(
+            options.file, chunksize=-1,
+            resumable=True
+            )
+        )
+    resumable_upload(insert_request)
 
 
 # This method implements an exponential backoff strategy to resume a
@@ -111,22 +108,17 @@ def resumable_upload(insert_request):
                 raise
         except RETRIABLE_EXCEPTIONS, e:
             error = "A retriable error occurred: %s" % e
-            if error is not None:
+        if error is not None:
                 print error
                 retry += 1
                 if retry > MAX_RETRIES:
                     exit("No longer attempting to retry.")
-                    max_sleep = 2 ** retry
-                    sleep_seconds = random.random() * max_sleep
-                    print "Sleeping %f seconds and then retrying..." % sleep_seconds
-                    time.sleep(sleep_seconds)
+                max_sleep = 2 ** retry
+                sleep_seconds = random.random() * max_sleep
+                print "Sleeping %f seconds and then retrying..." % sleep_seconds
+                time.sleep(sleep_seconds)
 
 
 def test(args):
     print("\n=== Test with", args)
     print(vars(args))
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
