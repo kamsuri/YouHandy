@@ -4,8 +4,8 @@ from apiclient.errors import HttpError
 from werkzeug import secure_filename
 from oauth2client.tools import argparser
 from upload import initialize_upload, get_authenticated_service
-
-
+from my_uploads import main
+from download import down
 # Initialize the Flask application
 app = Flask(__name__)
 
@@ -53,12 +53,34 @@ def upload():
         youtube = get_authenticated_service(args)
         try:
             initialize_upload(youtube, args)
-            print "Video Uploaded Successfully"
-            return render_template('index.html')
+            return render_template('index.html', text="Video %s Uploaded Successfully" % filename)
         except HttpError, e:
+            return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+            print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+
+@app.route('/list')
+def list():
+  try:
+    text = main()
+    return render_template('index.html', text=text)
+  except HttpError, e:
+            return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+            print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+
+@app.route('/download', methods=['GET','POST'])
+def download():
+  url = request.form['link']
+  try:
+    text = down(url)
+    return render_template('index.html', text=text)
+  except HttpError, e:
+            return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
             print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
 
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+if __name__ == "__main__":
+    app.run(debug=True)

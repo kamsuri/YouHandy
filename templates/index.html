@@ -11,12 +11,21 @@
       </div>
       <hr/>
       <div>
-      
-      <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" accept="video/*" name="file"><br /><br />
-        <input type="submit" value="Upload">
-      </form>
+        <form action="list" enctype="multipart/form-data">
+          <input type="submit" value="Display list">
+        </form>
+
+        <form action="upload" method="post" enctype="multipart/form-data">
+          <input type="file" accept="video/*" name="file"><br /><br />
+          <input type="submit" value="Upload">
+        </form>
+
+        <form action="download" method="post" enctype="multipart/form-data">
+          <input type="text" name="link" value="Paste link of video to download">
+          <input type="submit" value="Download">
+        </form>
       </div>
+      {{text|safe}}
     </div>
   </body>
 </html>

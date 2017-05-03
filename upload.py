@@ -9,6 +9,8 @@ from apiclient.http import MediaFileUpload
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import run_flow
+from oauth2client.tools import argparser
+import os
 
 # Explicitly tell the underlying HTTP transport library not to retry, since
 # we are handling retry logic ourselves.
@@ -31,7 +33,8 @@ CLIENT_SECRETS_FILE = "client_secrets.json"
 # This OAuth 2.0 access scope allows an application to upload files to the
 # authenticated user's YouTube channel,
 # but doesn't allow other types of access.
-YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube.upload"
+YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube"
+YOUTUBE_READONLY_SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 # This variable defines a message to display if the CLIENT_SECRETS_FILE is
