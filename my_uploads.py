@@ -69,7 +69,7 @@ def main():
       # of videos uploaded to the authenticated user's channel.
       uploads_list_id = channel["contentDetails"]["relatedPlaylists"]["uploads"]
 
-      resp = "Videos in list %s\n\n" % uploads_list_id
+      #resp = "Videos in list %s\n\n" % uploads_list_id
 
       # Retrieve the list of videos uploaded to the authenticated user's channel.
       playlistitems_list_request = youtube.playlistItems().list(
@@ -85,7 +85,7 @@ def main():
         for playlist_item in playlistitems_list_response["items"]:
           title = playlist_item["snippet"]["title"]
           video_id = playlist_item["snippet"]["resourceId"]["videoId"]
-          resp += "%s (%s)\n" % (title, video_id)
+          resp = "%s (%s)\n" % (title, video_id)
 
         playlistitems_list_request = youtube.playlistItems().list_next(
           playlistitems_list_request, playlistitems_list_response)

@@ -6,6 +6,7 @@ from oauth2client.tools import argparser
 from upload import initialize_upload, get_authenticated_service
 from my_uploads import main
 from download import down
+
 # Initialize the Flask application
 app = Flask(__name__)
 
@@ -31,6 +32,9 @@ def upload():
     if file and allowed_file(file.filename):
         # Make the filename safe, remove unsupported chars
         filename = secure_filename(file.filename)
+        check = main()
+        if filename in check:
+          return render_template('index.html', text="Video %s already exists" % filename)
         # Move the file to the upload folder
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # Specifying the filename, title, description and other arguments
@@ -71,8 +75,8 @@ def list():
 def download():
   url = request.form['link']
   try:
-    down(url)
-    return render_template('index.html', text="Video downloaded successfully")
+    text = down(url)
+    return render_template('index.html', text=text)
   except HttpError, e:
             return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
             print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
