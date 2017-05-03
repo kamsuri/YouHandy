@@ -71,8 +71,8 @@ def list():
 def download():
   url = request.form['link']
   try:
-    text = down(url)
-    return render_template('index.html', text=text)
+    down(url)
+    return render_template('index.html', text="Video downloaded successfully")
   except HttpError, e:
             return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
             print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
