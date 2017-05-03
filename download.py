@@ -15,8 +15,7 @@ class MyLogger(object):
 
 def my_hook(d):
     if d['status'] == 'finished':
-        resp = "Done downloading"
-        return resp
+        print "Done downloading"
 
 def down(link):
 	ydl_opts = {
