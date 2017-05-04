@@ -60,8 +60,6 @@ def upload():
                                choices=VALID_PRIVACY_STATUSES,
                                default=VALID_PRIVACY_STATUSES[0],
                                help="Video privacy status.")
-        #args = argparser.parse_args(["--file", "uploads/"+filename])
-        #args += argparser.parse_args(["--description", descp])
         args = argparser.parse_args(["--file", "uploads/"+filename])
         youtube = get_authenticated_service(args)
         try:
