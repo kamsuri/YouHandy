@@ -20,6 +20,12 @@ VALID_PRIVACY_STATUSES = ("public", "private", "unlisted")
 
 @app.route('/')
 def index():
+    try:
+        text = main()
+        return render_template('index.html', list=text)
+    except HttpError, e:
+        return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+        print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
     return render_template('index.html')
 
 
@@ -28,6 +34,7 @@ def index():
 def upload():
     # Get the name of the uploaded file
     file = request.files['file']
+    descp = request.form['descp']
     # Check if the file is one of the allowed types/extensions
     if file and allowed_file(file.filename):
         # Make the filename safe, remove unsupported chars
@@ -39,11 +46,11 @@ def upload():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # Specifying the filename, title, description and other arguments
         argparser.add_argument("--file", required=True,
-                               help="Video file to upload", default=filename)
+                               help="Video file to upload", default="uploads/"+filename)
         argparser.add_argument("--title", help="Video title",
                                default=filename)
         argparser.add_argument("--description", help="Video description",
-                               default="Test Description")
+                               default=descp)
         argparser.add_argument("--category", default="22",
                                help="Numeric video category. ")
         argparser.add_argument("--keywords",
@@ -53,6 +60,8 @@ def upload():
                                choices=VALID_PRIVACY_STATUSES,
                                default=VALID_PRIVACY_STATUSES[0],
                                help="Video privacy status.")
+        #args = argparser.parse_args(["--file", "uploads/"+filename])
+        #args += argparser.parse_args(["--description", descp])
         args = argparser.parse_args(["--file", "uploads/"+filename])
         youtube = get_authenticated_service(args)
         try:
@@ -62,14 +71,7 @@ def upload():
             return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
             print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
 
-@app.route('/list')
-def list():
-  try:
-    text = main()
-    return render_template('index.html', text=text)
-  except HttpError, e:
-            return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
-            print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+
 
 @app.route('/download', methods=['GET','POST'])
 def download():
@@ -78,13 +80,21 @@ def download():
     text = down(url)
     return render_template('index.html', text=text)
   except HttpError, e:
-            return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+            return render_template('download.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
             print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
 
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+def list():
+  try:
+    text = main()
+    return render_template('index.html', text=text)
+  except HttpError, e:
+            return render_template('index.html', text="An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+            print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
 
 if __name__ == "__main__":
     app.run(debug=True)

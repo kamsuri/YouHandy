@@ -1,32 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-          rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>YouHandy</title>
+
+    <!-- Bootstrap core CSS 
+    <link href="../static_files/css/bootstrap.min.css?q=1280549780" type="text/css" media="screen" charset="utf-8" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../static_files/css/ie10-viewport-bug-workaround.css?q=1280549780" type="text/css" media="screen" charset="utf-8" />
+
+    <!-- Custom styles for this template 
+    <link href="../static_files/css/cover.css?q=1280549780" type="text/css" media="screen" charset="utf-8" />-->
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../static_files/js/ie-emulation-modes-warning.js?q=1280549780"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    /*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #CC181E;
+}
+
+/* Custom default button */
+.btn-default,
+.btn-default:hover,
+.btn-default:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #CC181E;
+  border: 1px solid #CC181E;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+body {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+
+/* Extra markup and styles for table-esque vertical and horizontal centering */
+.site-wrapper {
+  display: table;
+  width: 100%;
+  height: 100%; /* For at least Firefox */
+  min-height: 100%;
+  -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+          box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+          
+}
+.site-wrapper-inner {
+  display: table-cell;
+  vertical-align: top;
+}
+.cover-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Padding for spacing */
+.inner {
+  padding: 30px;
+}
+
+
+/*
+ * Header
+ */
+.masthead-brand {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.masthead-nav > li {
+  display: inline-block;
+}
+.masthead-nav > li + li {
+  margin-left: 20px;
+}
+.masthead-nav > li > a {
+  padding-right: 0;
+  padding-left: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #CC181E; /* IE8 proofing */
+  color: rgba(255,255,255,.75);
+  border-bottom: 2px solid transparent;
+}
+.masthead-nav > li > a:hover,
+.masthead-nav > li > a:focus {
+  background-color: transparent;
+  border-bottom-color: #a9a9a9;
+  border-bottom-color: rgba(255,255,255,.25);
+}
+.masthead-nav > .active > a,
+.masthead-nav > .active > a:hover,
+.masthead-nav > .active > a:focus {
+  color: #CC181E;
+}
+
+@media (min-width: 768px) {
+  .masthead-brand {
+    float: left;
+  }
+  .masthead-nav {
+    float: right;
+  }
+}
+
+
+/*
+ * Cover
+ */
+
+.cover {
+  padding: 0 20px;
+}
+.cover .btn-lg {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+
+/*
+ * Footer
+ */
+
+.mastfoot {
+  color: #999; /* IE8 proofing */
+  color: rgba(255,255,255,.5);
+}
+
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 768px) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  .mastfoot {
+    position: fixed;
+    bottom: 0;
+  }
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+  /* Handle the widths */
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+  }
+}
+
+@media (min-width: 992px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 900px;
+  }
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
   </head>
+
   <body>
-    <div class="container">
-      <div class="header">
-        <h3 class="text-muted">Upload a Video</h3>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h2 class="masthead-brand" style="color:#CC181E;"><img src="{{url_for('static', filename='you.png')}}"  width:200px; height:100px /></h2>
+              <!--<nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="list.html">My Uploads</a></li>
+                  <li><a href="{{ url_for('upload') }}">Upload</a></li>
+                  <li><a href="download.html">Download</a></li>
+                </ul>
+              </nav>-->
+            </div>
+          </div><br><br><br><br><br><br>
+<!--
+          <div class="inner cover">
+            <h2 class="cover-heading" ><i>Welcome to</i> <b style="color:#CC181E; display=inline;">YouHandy</b></h2>
+            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-default">Learn more</a>-->
+            </p>
+             <div class="inner cover">
+            <div class="container">
+            <div class="row">
+              <div class="col-md-3">
+              <form class="form-signin" action="upload" method="post" enctype="multipart/form-data">
+        <h2 class="form-signin-heading" style="color:#CC181E; ">Upload a video</h2><br><br>
+        <h4 class="form-signin-heading" style="color:#fff; ">Add description for video:</h4>
+        <input type="text" name="descp" style="color:black" ></input>
+        <h4 class="form-signin-heading" style="color:#fff; ">Select a video to upload:</h4>
+        <input type="file" accept="video/*" name="file" required autofocus><br>
+        <center><button class="btn btn-sm btn-danger btn-block" type="submit">Upload</button></center>
+      </form>
+    </div>
+        <div class="col-md-3">
+             <form class="form-signin" action="download" method="post" enctype="multipart/form-data">
+        <h2 class="form-signin-heading" style="color:#CC181E; ">Download a video</h2><br><br>
+        <h4 class="form-signin-heading"  style="color:#fff; ">Paste video link to download:</h4>
+         <input type="text" name="link" style="color:black" required autofocus><br><br>
+        <center><button class="btn btn-sm btn-danger btn-block" type="submit">Download</button></center>
+      </form>
       </div>
-      <hr/>
+      <div class="col-md-3">
+        {{list|safe}}
+    </div>
+    </div>
+      </div
+    </div>
       <div>
-        <form action="list" enctype="multipart/form-data">
-          <input type="submit" value="Display list">
-        </form>
-
-        <form action="upload" method="post" enctype="multipart/form-data">
-          <input type="file" accept="video/*" name="file"><br /><br />
-          <input type="submit" value="Upload">
-        </form>
-
-        <form action="download" method="post" enctype="multipart/form-data">
-          <input type="text" name="link" value="Paste link of video to download">
-          <input type="submit" value="Download">
-        </form>
-      </div>
       {{text|safe}}
     </div>
+
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Developed by <a href="https://github.com/kamsuri">Kamakshi Suri</a> and <a href="https://github.com/ridhibhat">Ridhi Bhat</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../static_files/js/jquery.min.js"><\/script>')</script>
+    <script src="../static_files/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+     <script src="../static_files/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
- 
